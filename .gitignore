@@ -1,0 +1,24 @@
+# Local IDE workspace state
+**/.metadata/
+
+# Generated build directories
+**/Debug/
+**/Release/
+**/build/
+
+# Python caches and virtual environments
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
