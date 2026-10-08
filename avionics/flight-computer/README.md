@@ -1,11 +1,7 @@
 # Flight computer
 
-This is the STM32 flight computer project. Open this folder in STM32CubeIDE as `neptune_avionics_bench`. We're using the NUCLEO-H5E5ZJ for development.
+This is the STM32 flight computer project for the NUCLEO-H5E5ZJ. Open this folder in STM32CubeIDE as `neptune_avionics_bench`.
 
-We're starting with the LSM6DSV320X IMU. SPI4 is the proposed connection. First, check the pin assignments in CubeMX and generate the matching code. Then add ST's driver and the functions that connect it to STM32 HAL. Transfers need a timeout and must report errors.
+Start with the [setup guide](../../StartHere.md) and [sensor driver list](../../docs/sensor-drivers.md). Our first device is the LSM6DSV320X IMU, using the proposed SPI4 connection. Its STM32 functions need timeouts and error reporting.
 
-Keep generated code in `Core` and ST support files in `Drivers`. Put imported sensor drivers in `ThirdParty`, with their licenses and source versions. Our own headers and source files can go in `Core/Inc/neptune` and `Core/Src/neptune`.
-
-For now, get the project compiling one step at a time. Actual sensor communication still needs hardware testing. Keep the architecture and connection notes in `docs` at the repository root, and mark proposals clearly.
-
-The [sensor driver sources](../../docs/sensor-drivers.md) list the files, links and remaining STM32 work.
+Keep generated code in `Core`, ST support in `Drivers` and imported drivers in `ThirdParty`. Our own code can go in `Core/Inc/neptune` and `Core/Src/neptune`. Architecture and connection notes go in the repo's `docs` folder. Sensor communication still needs hardware testing.
