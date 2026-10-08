@@ -7,3 +7,5 @@ We're starting with the LSM6DSV320X IMU. SPI4 is the proposed connection. First,
 Keep generated code in `Core` and ST support files in `Drivers`. Put imported sensor drivers in `ThirdParty`, with their licenses and source versions. Our own headers and source files can go in `Core/Inc/neptune` and `Core/Src/neptune`.
 
 For now, get the project compiling one step at a time. Actual sensor communication still needs hardware testing. Keep the architecture and connection notes in `docs` at the repository root, and mark proposals clearly.
+
+The [sensor driver sources](../../docs/sensor-drivers.md) list the files, links and remaining STM32 work.
