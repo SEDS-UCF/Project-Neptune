@@ -13,7 +13,18 @@ print("CONNECTION LINE OPEN")
 
 con, addr = server.accept()
 
-data = con.recv(size).decode(encoding='utf-8')
+rawdata = con.recv(size)#No decoding yet, receives as bytes
 
-print(data)#Here is where changes need to be made to write to files and decode at different times
+with open("telemetry_data.txt", "wb") as rawdatafile:
+    rawdatafile.write(rawdata)
 
+print("raw data is received and written to file\n")
+
+#Now need to add in the packets so that they are stored in determined sizes
+
+data = rawdata.decode(encoding = 'utf-8')#Decodes
+
+with open("readable_data.txt", "w") as datafile:
+    datafile.write(data)
+
+print("readable data is received and written to file\n")
