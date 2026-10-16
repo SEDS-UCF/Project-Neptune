@@ -20,9 +20,9 @@
 #include "main.h"
 #include "icache.h"
 #include "gpio.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "flight_app.h"
 
 /* USER CODE END Includes */
 
@@ -119,12 +119,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  flight_app_init();
+
   while (1)
   {
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    flight_app_step();
   }
   /* USER CODE END 3 */
 }
