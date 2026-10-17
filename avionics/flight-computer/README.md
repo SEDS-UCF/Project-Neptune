@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project provides the bench-development firmware for the NUCLEO-H5E5ZJ board.
+This project contains the Project Neptune flight computer application. The bench development uses the NUCLEO-H5E5ZJ board.
 
 STM32CubeMX-generated initialization and board-support code are in C. Handwritten application code uses C++.
 
@@ -14,6 +14,7 @@ The current project uses:
 - STM32CubeMX 6.18.1
 - STM32CubeH5 firmware package 1.7.0
 - The ARM compiler bundled with STM32CubeIDE
+- X-CUBE-FREERTOS, providing FreeRTOS with the CMSIS-RTOS2 API
 
 STM32CubeIDE is used to build and debug the firmware. STM32CubeMX is used to configure peripherals and regenerate initialization code.
 
@@ -29,14 +30,13 @@ When editing generated code, place handwritten additions inside the designated U
 
 ## Current Status
 
-The project has been built on Windows.
+The application uses FreeRTOS tasks and a fixed size measurement queue. 
 
-The C startup code calls two C++ application functions:
+- `flight_app_init()` runs once from the default RTOS task and creates the measurement queue and acquisition task.
+- The acquisition task generates timestamped synthetic accelerometer measurements and sends them to the queue.
+- The default RTOS task repeatedly calls `flight_app_step()`, which receives one measurement and checks its validity flag and age.
 
-- `flight_app_init()` runs once after board initialization.
-- `flight_app_step()` runs repeatedly from the main loop.
 
-Both functions are currently empty placeholders.
 
 ## Integration Notes
 
