@@ -32,9 +32,6 @@ def findChecksum(data, k):#Double check how to define checksum
       checksum += '1'
     return checksum
 
-print(f''c1)
-print(f'\n'c2)
-print(f'\n'c3) #Potentially prints packets in defined size?? Not sure yet
 
 sender.send(data.encode('utf-8'))
 
