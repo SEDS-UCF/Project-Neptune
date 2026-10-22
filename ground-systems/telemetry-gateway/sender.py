@@ -20,8 +20,10 @@ def findChecksum(data, k):#Double check how to define checksum
   print(c3)
   print(c4)
   binary_c1 = ''.join(format(ord(letter), '08b') for letter in c1) # '08b' tells ord() to turn into 8-bit binary
-  print(binary_c1) # worked because turned string into ASCII (integer i think?) and then into binary
-  sum = bin(int(c1, base=2) + int(c2, base=2) + int(c3, base=2) + int(c4, base=2))[2:]
+  binary_c2 = ''.join(format(ord(letter), '08b') for letter in c2)
+  binary_c3 = ''.join(format(ord(letter), '08b') for letter in c3)
+  binary_c4 = ''.join(format(ord(letter), '08b') for letter in c4)
+  sum = bin(int(binary_c1, base=2) + int(binary_c2, base=2) + int(binary_c3, base=2) + int(binary_c4, base=2))[2:]
 
   if (len(sum) > k):
     x = len(sum) - k
@@ -44,5 +46,6 @@ print(checksum)
 
 sender.send(data.encode('utf-8'))
 
+sender.send(checksum.encode('utf-8'))
 sender.close()
 

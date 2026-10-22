@@ -18,7 +18,7 @@ k = 15
 #function returns the checksum
 
 
-def checksumreceiver(data, k, checksum):
+def findReceiverchecksum(data, k, checksum):
 
     #splices the data into 
     c1 = data[0:k]
@@ -44,6 +44,8 @@ def checksumreceiver(data, k, checksum):
         return receiverchecksum
 #End checksum
 
+
+
 rawdata = con.recv(size)#No decoding yet, receives as bytes
 
 with open("telemetry_data.txt", "wb") as rawdatafile:
@@ -59,5 +61,9 @@ with open("readable_data.txt", "w") as datafile:
     datafile.write(data)
 
 print("readable data is received and written to file\n")
+
+receiverchecksum = findReceiverchecksum(rawdata, k, checksum)
+
+print(receiverchecksum)
 
 
