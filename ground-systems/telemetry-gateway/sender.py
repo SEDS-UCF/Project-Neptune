@@ -13,6 +13,7 @@ ip = socket.gethostname()
 port = 12345
 sender = socket.socket()
 sender.connect((ip, port))
+#Initializes the connection between the two scripts
 
 message = "ABCD" #Defines the message, 4 bytes to be simple
 message_bytes = message.encode('utf-8') #Converts the message to bytes
