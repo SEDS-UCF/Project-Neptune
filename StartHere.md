@@ -14,7 +14,7 @@ This is the shared Project Neptune repo. Start with your subteam's folder and ke
 
 Our plan is to read the sensors, estimate the rocket's motion, save the data and send telemetry to the ground. We're starting with the IMU and adding the other devices one at a time.
 
-Open `avionics/flight-computer` in STM32CubeIDE as `neptune_avionics_bench`. We're using the NUCLEO-H5E5ZJ for development. The [driver list](docs/sensor-drivers.md) has the source links and the work each device needs.
+Open `avionics/flight-computer` in STM32CubeIDE as `neptune_avionics_bench`. We're using the NUCLEO-H5E5ZJ for development. The [driver list](avionics/docs/sensor-drivers.md) has the source links and the work each device needs.
 
 1. Use GitHub Desktop to update your clone and make a branch. If you're contributing through a fork, sync it with the team repo first.
 2. Build the existing project. Then review the IMU connections in its `.ioc`, configure the proposed SPI4 bus in CubeMX and check the generated changes.

@@ -1,6 +1,6 @@
 # Sensor driver sources
 
-These links come from Sensors and PCB Parts and our earlier MS5803 review. For now, this page lists the sources. The driver code still needs to be added and tested on STM32.
+These links come from Sensors and PCB Parts. For now, this page lists the sources. The driver code still needs to be added and tested on STM32.
 
 | Device | Source and files | Work needed for STM32 |
 | --- | --- | --- |
