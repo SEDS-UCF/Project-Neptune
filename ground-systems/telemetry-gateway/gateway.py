@@ -1,6 +1,5 @@
 import socket
 import struct
-from tabnanny import check
 
 ip = socket.gethostname() #New feature is adding ip and port at the top to easily change in the future
 port = 12345
@@ -54,18 +53,18 @@ def find_receiverchecksum(message, k):
   receiver_checksum = ''
   for i in receiver_sum:
     if i == '1':
-      receiver_checksum += '1'
-    else:
       receiver_checksum += '0'
+    else:
+      receiver_checksum += '1'
 
   return receiver_checksum
 
 receiver_checksum = find_receiverchecksum(message, 16)
 
-finalsum = bin(int(checksum, 2) + int(receiver_checksum, 2))[2:]
+finalsum = bin(int(checksum, 2) - int(receiver_checksum, 2))[2:]
 
 print(checksum)
-print(receiver_checksum)
+print(receiver_checksum + "\n")
 
 finalcomp = ''
 for i in finalsum:
