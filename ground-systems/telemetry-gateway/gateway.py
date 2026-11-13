@@ -66,14 +66,7 @@ finalsum = bin(int(checksum, 2) - int(receiver_checksum, 2))[2:]
 print(checksum)
 print(receiver_checksum + "\n")
 
-finalcomp = ''
-for i in finalsum:
-    if(i == '0'):
-        finalcomp += '0'
-    else:
-        finalcomp += '1'
-
-if (int(finalcomp, 2) == 0):
+if (int(finalsum, 2) == 0):
    print("NO ERRORS DETECTED")
 else:
    print("MESSAGE CORRUPTED")
