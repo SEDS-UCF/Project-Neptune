@@ -1,72 +1,80 @@
 import socket
+import struct
+from tabnanny import check
 
 ip = socket.gethostname() #New feature is adding ip and port at the top to easily change in the future
 port = 12345
 
-size = 99999999 #Just to be safe on the size of data
-#Also excluded loopback ip that was giving issues
+packet_size = 32
+#packets are split in 4 bytes header, 4 bytes data, 8 bytes checksum
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((ip, port))           
 server.listen()
 #Same basic connection setup
-print("CONNECTION LINE OPEN")
+print("CONNECTION LINE OPEN\n")
 
 con, addr = server.accept()
 
-
-#start of checksum
-k = 15
-
-#function returns the checksum
-
-
-def findReceiverchecksum(data, k, checksum):
-
-    #splices the data into 
-    c1 = data[0:k]
-    c2 = data[k:2*k]
-    c3 = data[2*k:3*k]
-    c4 = data[3*k:4*k]
-
-    receiversum = bin(int(c1, base=2) + int(c2, base=2) + int(checksum, base=2) + int(c3, base=2) + int(c4, base=2) + int(checksum, base=2))
-    print(receiverchecksum)
-    if (len(receiversum) > k):
-         x = len(receiversum) - k
-         receiversum = bin(int(receiversum[0:x], base=2) + int(receiversum[x:], base=2))[2:]
-
-    if (len(receiversum) < k):
-        sum = '0'*(k - len(receiversum)) + receiversum
-
-    receiverchecksum = ''
-    for i in receiversum:
-        if (i =='1'):
-            receiverchecksum += '0'
-        else:
-            receiverchecksum += '1'
-    return receiverchecksum
-#End checksum
-
-
-
-rawdata = con.recv(size)#No decoding yet, receives as bytes
+rawdata = con.recv(packet_size)#No decoding yet, receives as bytes
 
 with open("telemetry_data.txt", "wb") as rawdatafile:
     rawdatafile.write(rawdata)
 
 print("raw data is received and written to file\n")
 
-#Now need to add in the packets so that they are stored in determined sizes
+id = rawdata[0:4]
+message_bytes = rawdata[4:8]
+checksum_bytes = rawdata[8:]
 
-data = rawdata.decode(encoding = 'utf-8')#Decodes
+id = struct.unpack('!I', id)[0]
+message = message_bytes.decode(encoding = 'utf-8')
+checksum = checksum_bytes.decode(encoding = 'utf-8')
+
 
 with open("readable_data.txt", "w") as datafile:
-    datafile.write(data)
+    datafile.write(message)
 
-print("readable data is received and written to file\n")
+print("readable data is written to file\n")
 
-receiverchecksum = findReceiverchecksum(rawdata, k, checksum)
+def find_receiverchecksum(message, k):
+  m1 = message[0:k]
 
-print(receiverchecksum)
+  binary_m1 = ''.join(format(ord(char), '08b') for char in m1)
+#converts each data segment to binary
+  receiver_sum = bin(int(binary_m1, 2))[2:]
 
+  if (len(receiver_sum) > k):
+    x = len(receiver_sum) - k
+    receiver_sum = bin(int(receiver_sum[0:x],2) + int(receiver_sum[x:], 2))[2:]
 
+  if (len(receiver_sum) < k):
+    receiver_sum = '0' * (k - len(receiver_sum)) + receiver_sum
+
+  receiver_checksum = ''
+  for i in receiver_sum:
+    if i == '1':
+      receiver_checksum += '1'
+    else:
+      receiver_checksum += '0'
+
+  return receiver_checksum
+
+receiver_checksum = find_receiverchecksum(message, 16)
+
+finalsum = bin(int(checksum, 2) + int(receiver_checksum, 2))[2:]
+
+print(checksum)
+print(receiver_checksum)
+
+finalcomp = ''
+for i in finalsum:
+    if(i == '0'):
+        finalcomp += '0'
+    else:
+        finalcomp += '1'
+
+if (int(finalcomp, 2) == 0):
+   print("NO ERRORS DETECTED")
+else:
+   print("MESSAGE CORRUPTED")

@@ -1,51 +1,47 @@
 import socket
-
+import struct
 
 ip = socket.gethostname()
 port = 12345
 sender = socket.socket()
 sender.connect((ip, port))
 
-data = "Telemetry Data Telemetry Data Telemetry Data Telemetry Data "
-#start of checksum
-k = 15
+message = "ABCD"
+message_bytes = message.encode('utf-8')
 
-def findChecksum(data, k):#Double check how to define checksum
-  c1 = data[0:k]
-  c2 = data[k:2*k]
-  c3 = data[2*k:3*k]#Packet overlap?
-  c4 = data[3*k:4*k]
-  print(c1)
-  print(c2)
-  print(c3)
-  print(c4)
-  binary_c1 = ''.join(format(ord(letter), '08b') for letter in c1) # '08b' tells ord() to turn into 8-bit binary
-  binary_c2 = ''.join(format(ord(letter), '08b') for letter in c2)
-  binary_c3 = ''.join(format(ord(letter), '08b') for letter in c3)
-  binary_c4 = ''.join(format(ord(letter), '08b') for letter in c4)
-  sum = bin(int(binary_c1, base=2) + int(binary_c2, base=2) + int(binary_c3, base=2) + int(binary_c4, base=2))[2:]
+id = 1
+
+def find_checksum(message, k):
+  m1 = message[0:k]
+
+  binary_m1 = ''.join(format(ord(char), '08b') for char in m1)
+#converts each data segment to binary
+  sum = bin(int(binary_m1, 2))[2:]
 
   if (len(sum) > k):
     x = len(sum) - k
-    sum = bin(int(sum[0:x], base=2) + int(sum[x:], base=2))[2:]
+    sum = bin(int(sum[0:x],2) + int(sum[x:], 2))[2:]
 
   if (len(sum) < k):
-    sum = '0'*(k - len(sum)) + sum
+    sum = '0' * (k - len(sum)) + sum
 
   checksum = ''
   for i in sum:
-    if (i == '1'):
+    if i == '1':
       checksum += '0'
     else:
       checksum += '1'
-    return checksum
 
-checksum = findChecksum(data, k)
-#End checksum
-print(checksum)
+  return checksum
 
-sender.send(data.encode('utf-8'))
+checksum = find_checksum(message, 16)
+checksum_bytes = checksum.encode('utf-8')
 
-sender.send(checksum.encode('utf-8'))
+packet = struct.pack('!I', id) + message_bytes + checksum_bytes
+
+print(packet)
+
+sender.send(packet)
 sender.close()
+
 

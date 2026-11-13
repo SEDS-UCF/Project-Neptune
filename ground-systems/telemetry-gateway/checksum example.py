@@ -1,3 +1,6 @@
+#modeled after Riya Kumar's Code from geeksforgeeks.org 'Implementing Checksum using Python'
+
+
 #checksum of sent message
 
 def findchecksum(message, k):
@@ -16,7 +19,6 @@ def findchecksum(message, k):
 
     if (len(sum) < k): #if the length of the sum is less than k
         sum = '0' * (k - len(sum)) + sum #pad with leading zeros
-    #overflow bits?
 
     checksum = ''
     for i in sum:
@@ -73,7 +75,7 @@ for i in finalsum:
     if(i == '0'):
         finalcomp += '0'
     else:
-        finalcomp += '0'
+        finalcomp += '1'
 
 #when added together, the checksum should cancel out
 #if they do, there are no errors
