@@ -10,17 +10,36 @@ This is the shared Project Neptune repo. Start with your subteam's folder and ke
 | `simulation/` | Flight models and vehicle parameters. |
 | `docs/` | Architecture, connections and setup notes. |
 
-## Flight computer
+## Firmware projects
 
-Our plan is to read the sensors, estimate the rocket's motion, save the data and send telemetry to the ground. We're starting with the IMU and adding the other devices one at a time.
+| Project | Board | Folder to import into CubeIDE | Project name |
+| --- | --- | --- | --- |
+| Breakout bench tests | NUCLEO-H533RE | `avionics/bench-tests/STM32CubeIDE` | `neptune_h533re_bench` |
+| Flight computer | NUCLEO-H5E5ZJ | `avionics/flight-computer` | `neptune_avionics_bench` |
 
-Open `avionics/flight-computer` in STM32CubeIDE as `neptune_avionics_bench`. We're using the NUCLEO-H5E5ZJ for development. The [driver list](avionics/docs/sensor-drivers.md) has the source links and the work each device needs.
+See the [bench README](avionics/bench-tests/README.md) for breakout boards and technical references, or the [flight computer README](avionics/flight-computer/README.md) for its tools and application.
 
-1. Use GitHub Desktop to update your clone and make a branch. If you're contributing through a fork, sync it with the team repo first.
-2. Build the existing project. Then review the IMU connections in its `.ioc`, configure the proposed SPI4 bus in CubeMX and check the generated changes.
-3. Add ST's IMU driver and the small functions that connect it to STM32 HAL. Build again, then test the sensor when the hardware is available. Record the version and what passed.
-4. Review the changed files in GitHub Desktop, commit, push and open a pull request to the team repo.
+## Development workflow
 
-CubeIDE and GitHub Desktop use the same local files. Keep generated code in `Core`, ST support in `Drivers` and imported sensor drivers in `ThirdParty`. Our own device code can go in `Core/Inc/neptune` and `Core/Src/neptune`. Keep each driver's license and source version with it.
+1. Clone the repository once. For fork contributions, clone your fork and keep it synced with the team repository. Update your local branch before starting, then create a branch for your change.
+2. In CubeIDE, use **File > Import > General > Existing Projects into Workspace** and select the project folder above. Leave **Copy projects into workspace** unchecked so CubeIDE edits the files in your Git clone.
+3. Build the existing project before changing firmware. These projects currently use CubeIDE's managed Make build.
+4. Configure pins, clocks and peripherals in the project's `.ioc` using CubeMX. Enable **Keep User Code when re-generating**, generate the code and review the changed files. The `.ioc` determines the generated peripheral setup and HAL module selection.
+5. Add your device or test code in small modules. Make sure new source files and folders are included in the CubeIDE build.
+6. For firmware changes, build Debug and Release. Run the relevant board tests when hardware is available, and record what you tested.
+7. Review the diff, commit and push your branch. Open a pull request into the team repository and describe the change and its validation.
 
-The driver code and sensor tests are still ahead of us. SPI4 is the current IMU proposal; we need to check it against CubeMX and the schematic as we set it up.
+## Code layout
+
+- `Core`: generated initialization and our application modules. Keep application additions to generated C files inside their `USER CODE` sections.
+- `Drivers`: supplied ST HAL and Arm CMSIS support.
+- `ThirdParty`: imported device drivers, with their license and source revision. See the [sensor driver list](avionics/docs/sensor-drivers.md).
+- Our device modules can use `Core/Inc/neptune` and `Core/Src/neptune`. Keep `main.c` short and call those modules from it.
+
+Keep the `.ioc`, source files, linker scripts and IDE project files in Git. Build folders and local workspace metadata stay excluded by `.gitignore`.
+
+## Git tools
+
+GitHub Desktop, terminal Git and CubeIDE with the optional EGit plugin can work with the same clone. Choose the interface you prefer; it does not change how the firmware builds.
+
+EGit provides Git Staging, commit, pull and push actions inside CubeIDE. See the [EGit guide](https://help.eclipse.org/latest/topic/org.eclipse.egit.doc/help/EGit/User_Guide/Tasks.html).
