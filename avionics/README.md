@@ -8,4 +8,6 @@ See the [flight computer README](flight-computer/README.md) for the NUCLEO-H5E5Z
 
 The [sensor driver list](docs/sensor-drivers.md) contains the source links and remaining STM32 integration work.
 
+See [H533RE bench tests](bench-tests/README.md) for the bench board configuration.
+
 Avionics architecture and connection notes go in `docs` within this folder. Repository-wide documentation stays in the root `docs` folder.
