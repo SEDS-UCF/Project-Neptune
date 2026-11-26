@@ -10,10 +10,6 @@ Includes the H533RE CubeIDE project, CubeMX file and test folders for the IMU, b
 | `lora` | Waveshare Core1121-HF | LR1121 | [Board guide](https://www.waveshare.com/wiki/Core1121-XF), [datasheet](https://files.waveshare.com/wiki/Core1121/LR1121_H2_DS_v2_0.pdf) |
 | `storage` | Adafruit SPI Flash SD Card, 512 MB (4899) | XTSD04GLGEAG | [Board schematic and guide](https://learn.adafruit.com/adafruit-spi-flash-sd-card/downloads), [datasheet](https://cdn-shop.adafruit.com/product-files/4899/2005251034_XTX-XTSD04GLGEAG_C558839%282%29.pdf) |
 
-The barometer datasheet describes the sensor. The exact Rakstore board schematic and full sensor ordering suffix have not been verified.
-
-SPI, I2C and UART HAL support is included for the breakout connections. Configure the bus instances, pins and speeds in CubeMX to match the bench wiring.
-
 Import the `STM32CubeIDE` folder into STM32CubeIDE. Start editing in `Core/Src/main.c`.
 
 Open `neptune_h533re_bench.ioc` in STM32CubeMX for hardware configuration.
