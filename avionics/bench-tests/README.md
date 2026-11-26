@@ -1,7 +1,17 @@
 # H533RE bench tests
 
-Open `neptune_h533re_bench.ioc` in STM32CubeMX for the NUCLEO-H533RE bench board. It is a minimal STM32H533RET6 configuration saved with CubeMX 6.18.1, with STM32CubeIDE as the target toolchain. Board peripherals, sensor buses and test firmware still need to be configured.
+Includes the H533RE CubeIDE project, CubeMX file and test folders for the IMU, barometer, GNSS, LoRa and storage.
 
-The empty IMU, barometer, GNSS, LoRa and storage folders are for the planned device tests. Each contains only a `.gitkeep` file so Git retains the folder. The [driver list](../docs/sensor-drivers.md) contains the existing source links; no device drivers or tests have been implemented here.
+| Test folder | Breakout board | Chip |
+| --- | --- | --- |
+| `imu` | [ST STEVAL-MKI251A](https://www.st.com/en/evaluation-tools/steval-mki251a.html) | LSM6DSV320X |
+| `barometer` | [Rakstore MS5803-01BA breakout (B09LY4BG1Z)](https://www.amazon.com/dp/B09LY4BG1Z) | MS5803-01BA |
+| `gnss` | [SparkFun MAX-M10S Qwiic (GPS-18037)](https://www.sparkfun.com/products/18037) | MAX-M10S |
+| `lora` | [Waveshare Core1121-HF](https://www.waveshare.com/product/core1121-xf.htm) | LR1121 |
+| `storage` | [Adafruit SPI Flash SD Card, 512 MB (4899)](https://www.adafruit.com/product/4899) | XTSD04GLGEAG |
 
-The existing H5E5 configuration remains at [flight-computer/neptune_avionics_bench.ioc](../flight-computer/neptune_avionics_bench.ioc) for reference. Its pin assignments need checking and adapting for the H533RE.
+Import the `STM32CubeIDE` folder into STM32CubeIDE. Start editing in `Core/Src/main.c`.
+
+Open `neptune_h533re_bench.ioc` in STM32CubeMX for hardware configuration.
+
+[Driver references](../docs/sensor-drivers.md) | [H5E5 configuration](../flight-computer/neptune_avionics_bench.ioc)

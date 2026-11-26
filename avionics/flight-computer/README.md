@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project contains the Project Neptune flight computer application targeting NUCLEO-H5E5ZJ. The separate [NUCLEO-H533RE bench setup](../bench-tests/README.md) provides the starting configuration for sensor tests on the bench board.
+This is the NUCLEO-H5E5ZJ flight-computer application. See [H533RE bench tests](../bench-tests/README.md) for the NUCLEO-H533RE setup.
 
 STM32CubeMX-generated initialization and board-support code are in C. Handwritten application code uses C++.
 
@@ -40,6 +40,6 @@ The application uses FreeRTOS tasks and a fixed size measurement queue.
 
 ## Integration Notes
 
-Start with the [setup guide](../../StartHere.md) and [sensor driver list](../docs/sensor-drivers.md). 
+Start with the [setup guide](../../StartHere.md) and [sensor driver list](../docs/sensor-drivers.md).
 
 Keep generated code in `Core`, ST support in `Drivers` and imported drivers in `ThirdParty`. Our own code can go in `Core/Inc/neptune` and `Core/Src/neptune`. Avionics architecture and connection notes go in `avionics/docs`. Sensor communication still needs hardware testing.
