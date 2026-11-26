@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project contains the Project Neptune flight computer application. The bench development uses the NUCLEO-H5E5ZJ board.
+This project contains the Project Neptune flight computer application targeting NUCLEO-H5E5ZJ. The separate [NUCLEO-H533RE bench setup](../bench-tests/README.md) provides the starting configuration for sensor tests on the bench board.
 
 STM32CubeMX-generated initialization and board-support code are in C. Handwritten application code uses C++.
 
